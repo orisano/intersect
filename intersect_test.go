@@ -84,7 +84,15 @@ func testIntersect(t *testing.T, fn func(dest, small, large []int) []int) {
 			},
 			want: []int{1, 1, 4, 5, 6, 7},
 		},
+		{
+			args: args{
+				small: []int{1, 1, 1, 1, 1, 6, 7, 8},
+				large: []int{1, 1, 1, 1, 5, 6, 7, 8},
+			},
+			want: []int{1, 1, 1, 1, 6, 7, 8},
+		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := fn(tt.args.dest, tt.args.small, tt.args.large); !reflect.DeepEqual(got, tt.want) {
