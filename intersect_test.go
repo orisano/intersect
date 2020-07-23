@@ -77,15 +77,13 @@ func testIntersect(t *testing.T, fn func(dest, small, large []int) []int) {
 			},
 			want: []int{1, 3, 4, 5, 6, 7},
 		},
-		/* TODO: to accept not set
-			{
-				args: args{
-					small: []int{1, 1, 1, 4, 5, 6, 7},
-					large: []int{1, 1, 3, 4, 5, 6, 7},
-				},
-				want: []int{1, 1, 4, 5, 6, 7},
+		{
+			args: args{
+				small: []int{1, 1, 1, 4, 5, 6, 7},
+				large: []int{1, 1, 3, 4, 5, 6, 7},
 			},
-		*/
+			want: []int{1, 1, 4, 5, 6, 7},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

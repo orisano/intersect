@@ -89,12 +89,21 @@ func Shotgun4(dest, small, large []int) []int {
 		}
 		if index1 < len(large) && large[index1] == target1 {
 			dest = append(dest, target1)
+			if index1 >= index2 {
+				index2 = index1 + 1
+			}
 		}
 		if index2 < len(large) && large[index2] == target2 {
 			dest = append(dest, target2)
+			if index2 >= index3 {
+				index3 = index2 + 1
+			}
 		}
 		if index3 < len(large) && large[index3] == target3 {
 			dest = append(dest, target3)
+			if index3 >= index4 {
+				index4 = index3 + 1
+			}
 		}
 		if index4 < len(large) && large[index4] == target4 {
 			dest = append(dest, target4)
