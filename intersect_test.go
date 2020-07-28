@@ -1,6 +1,7 @@
 package intersect
 
 import (
+	"fmt"
 	"math/rand"
 	"reflect"
 	"sort"
@@ -103,42 +104,59 @@ func testIntersect(t *testing.T, fn func(dest, small, large []int) []int) {
 }
 
 func BenchmarkIntersect(b *testing.B) {
-	n := 100000000
-	nTest := 32
-	mMax := 1000000000
-
-	rng := rand.New(rand.NewSource(0))
-	a := make([]int, n)
-	for i := range a {
-		a[i] = rng.Intn(mMax)
+	params := []struct {
+		n     int
+		nTest int
+		mMax  int
+	}{
+		{
+			n:     100000000,
+			nTest: 32,
+			mMax:  1000000000,
+		},
+		{
+			n:     10000,
+			nTest: 7000,
+			mMax:  1000000000,
+		},
 	}
-	sort.Ints(a)
-	q := make([]int, nTest)
-	for i := range q {
-		q[i] = a[rng.Intn(len(a))]
-	}
-	sort.Ints(q)
-	intersection := make([]int, 0, nTest)
 
-	b.ResetTimer()
-	b.Run("Naive", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			intersection = Naive(intersection[:0], q, a)
-		}
-	})
-	b.Run("Galloping", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			intersection = Galloping(intersection[:0], q, a)
-		}
-	})
-	b.Run("Shotgun1", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			intersection = Shotgun1(intersection[:0], q, a)
-		}
-	})
-	b.Run("Shotgun4", func(b *testing.B) {
-		for i := 0; i < b.N; i++ {
-			intersection = Shotgun4(intersection[:0], q, a)
-		}
-	})
+	for _, param := range params {
+		b.Run(fmt.Sprintf("n=%d,nTest=%d,mMax=%d", param.n, param.nTest, param.mMax), func(b *testing.B) {
+			rng := rand.New(rand.NewSource(0))
+			a := make([]int, param.n)
+			for i := range a {
+				a[i] = rng.Intn(param.mMax)
+			}
+			sort.Ints(a)
+			q := make([]int, param.nTest)
+			for i := range q {
+				q[i] = a[rng.Intn(len(a))]
+			}
+			sort.Ints(q)
+			intersection := make([]int, 0, param.nTest)
+
+			b.ResetTimer()
+			b.Run("Naive", func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					intersection = Naive(intersection[:0], q, a)
+				}
+			})
+			b.Run("Galloping", func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					intersection = Galloping(intersection[:0], q, a)
+				}
+			})
+			b.Run("Shotgun1", func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					intersection = Shotgun1(intersection[:0], q, a)
+				}
+			})
+			b.Run("Shotgun4", func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					intersection = Shotgun4(intersection[:0], q, a)
+				}
+			})
+		})
+	}
 }
