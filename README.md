@@ -13,12 +13,16 @@ go get github.com/orisano/intersect
 goos: darwin
 goarch: amd64
 pkg: github.com/orisano/intersect
-BenchmarkIntersect/Naive-8         	       9	 116047739 ns/op
-BenchmarkIntersect/Galloping-8     	  756350	      1669 ns/op
-BenchmarkIntersect/Shotgun1-8      	 1000000	      1219 ns/op
-BenchmarkIntersect/Shotgun4-8      	 1522401	       789 ns/op
+BenchmarkIntersect/n=100000000,nTest=32,mMax=1000000000/Naive-8   	      10	 107656768 ns/op
+BenchmarkIntersect/n=100000000,nTest=32,mMax=1000000000/Galloping-8         	  797413	      1477 ns/op
+BenchmarkIntersect/n=100000000,nTest=32,mMax=1000000000/Shotgun1-8          	 1000000	      1109 ns/op
+BenchmarkIntersect/n=100000000,nTest=32,mMax=1000000000/Shotgun4-8          	 1671450	       701 ns/op
+BenchmarkIntersect/n=10000,nTest=7000,mMax=1000000000/Naive-8               	   21763	     54934 ns/op
+BenchmarkIntersect/n=10000,nTest=7000,mMax=1000000000/Galloping-8           	   26590	     44635 ns/op
+BenchmarkIntersect/n=10000,nTest=7000,mMax=1000000000/Shotgun1-8            	    8660	    132265 ns/op
+BenchmarkIntersect/n=10000,nTest=7000,mMax=1000000000/Shotgun4-8            	    8527	    140649 ns/op
 PASS
-ok  	github.com/orisano/intersect	34.603s
+ok  	github.com/orisano/intersect	37.614s
 ```
 
 ## Author
